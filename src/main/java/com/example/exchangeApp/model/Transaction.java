@@ -10,25 +10,26 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
+@NoArgsConstructor
 @Data
 @Entity
 @Table (name="transactions")
 
-public class transaction {
+public class Transaction {
     @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Nonnull
 	private Long id;
     
     @ManyToOne
     @JoinColumn(name = "user_source_id")  
-    private user userSource;
+    private User userSource;
 
     @ManyToOne
     @JoinColumn(name = "user_destination_id")  
-    private user userDestination;
+    private User userDestination;
 
     @Column
 	@Nonnull

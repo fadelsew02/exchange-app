@@ -12,21 +12,21 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table (name="taux_change")
+@Table (name="TauxChange")
 
-public class taux_change {
+public class TauxChange {
     @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Nonnull
 	private Long id;
     
     @Column
 	@Nonnull
-	private String devise_source;
+	private String deviseSource;
 
     @Column
 	@Nonnull
-	private String devise_destination;
+	private String deviseDestination;
 
     @Column
 	@Nonnull

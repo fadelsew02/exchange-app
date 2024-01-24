@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: exchange
+      POSTGRES_USER: fadelsew
+      POSTGRES_PASSWORD: azerty
+    ports:
+      - 5433:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 5434:8080
+
+  smtp4dev:
+    image: rnwood/smtp4dev:v3
+    restart: always
+    ports:
+      # Change the number before : to the port the web interface should be accessible on
+      - 5435:80
+      # Change the number before : to the port the SMTP server should be accessible on
+      - 5431:25

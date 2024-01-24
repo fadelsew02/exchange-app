@@ -12,17 +12,17 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table (name="secondary_account")
+@Table (name="SecondaryAccount")
 
-public class secondary_account {
+public class SecondaryAccount {
     @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Nonnull
 	private Long id;
     
     @Column
 	@Nonnull
-	private String amount;
+	private Double amount;
 
     @Column
 	@Nonnull
