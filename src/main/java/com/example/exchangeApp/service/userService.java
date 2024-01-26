@@ -1,6 +1,8 @@
 package com.example.exchangeApp.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 // import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,6 +11,7 @@ import com.example.exchangeApp.model.User;
 import com.example.exchangeApp.model.Validation;
 import com.example.exchangeApp.model.Role;
 import com.example.exchangeApp.TypeDeRole;
+import com.example.exchangeApp.dto.TransferRequestDeviseDTO;
 import com.example.exchangeApp.repo.userRepo;
 
 import lombok.AllArgsConstructor;
@@ -19,7 +22,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @AllArgsConstructor
-@NoArgsConstructor
+// @NoArgsConstructor
 @Service
 public class userService implements UserDetailsService {
 
@@ -62,8 +65,8 @@ public class userService implements UserDetailsService {
 		return true;
 	}
 
-	public void activation(Map<String, String> activation) {
-
+	public boolean activation(Map<String, String> activation) {
+		System.out.print(activation);
 		final Validation validation = this.validationService.lireEnFonctionDuCode(activation.get("code"));
 		if(Instant.now().isAfter(validation.getExpiration())){
 			throw new RuntimeException("Votre code a expiré");
@@ -71,6 +74,43 @@ public class userService implements UserDetailsService {
 		final User utilisateurActiver = this.repo.findById(validation.getUtilisateur().getId()).orElseThrow(()-> new RuntimeException("Utilisateur inconnu"));
 		utilisateurActiver.setActif(true);
 		this.repo.save(utilisateurActiver);
+
+		return true;
+	}
+
+	public boolean addDevise(TransferRequestDeviseDTO transferRequestDeviseDTO){
+		   
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = userDetails.getUsername();
+
+		Optional<User> user1 = repo.findByEmail(username); 
+
+		if (user1.isPresent()) {
+			User user = user1.get();
+			user.setDevise(transferRequestDeviseDTO.devise());
+			repo.save(user);
+			return true; 
+		} else {
+			return false; 
+		}	
+	}
+
+
+	public boolean tranferMoney(TransferRequestDeviseDTO transferRequestDeviseDTO){
+		   
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = userDetails.getUsername();
+
+		Optional<User> user1 = repo.findByEmail(username); 
+
+		if (user1.isPresent()) {
+			User user = user1.get();
+			user.setDevise(transferRequestDeviseDTO.devise());
+			repo.save(user);
+			return true; 
+		} else {
+			return false; 
+		}	
 	}
 
 	@Override
@@ -79,19 +119,6 @@ public class userService implements UserDetailsService {
                 .findByEmail(username)
                 .orElseThrow(() -> new  UsernameNotFoundException("Aucun utilisateur ne corespond à cet identifiant"));
     }
-
-    // public Optional<User> connectUsers(User user) {
-    //     Optional<User> UserFound = null;
-    //     UserFound = repo.findByEmail(user.getEmail());    
-
-    //     return UserFound;
-    //     // if(UserFound != null){
-    //     //     if(UserFound.getPassword() == user.getPassword()){
-    //     //         return true;
-    //     //     }
-    //     // }
-    //     // return false;
-	// }
 }
 
 

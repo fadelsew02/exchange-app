@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <!-- <link rel="shortcut icon" href="./images/favicon.png" type=""> -->
+        <title>e-Transfert</title>
+        <link rel="stylesheet" type="text/css" th:href="@{../css/bootstrap.css}" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+        />
+        <link rel="stylesheet" th:href="@{../css/responsive.css}" />
+        <link rel="stylesheet" th:href="@{../css/font-awesome.min.css}" />
+        <link rel="stylesheet" th:href="@{../css/style.css}" />
+
+    <style>
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 500px;
+            text-align: center;
+            margin-top: 20vh;
+            opacity: 0.8;
+        }
+
+        h2 {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        input {
+            margin: 20px;
+            padding: 5px;
+            /* border: none; */
+            outline: none;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero_area">
+        <div class="hero_bg_box">
+          <div class="bg_img_box">
+            <img th:src="@{images/hero-bg.png}" alt="" />
+          </div>
+        </div>
+  
+        <!-- header section strats -->
+        <header class="header_section">
+          <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container">
+              <a class="navbar-brand" href="index.html">
+                <span> e-TRANSFERT </span>
+              </a>
+  
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class=""> </span>
+              </button>
+  
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Accueil </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" th:href="@{/monnaies}"> Nos monnaies</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" th:href="@{/reviews}">Appreciations</a>
+                  </li>
+  
+                  <li class="nav-item">
+                    <a class="nav-link" th:href="@{/contact}">Contact</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" th:href="@{/login-and-register}">
+                      <i class="fa fa-user" aria-hidden="true"></i>Se Connecter
+                      <span class="sr-only">(current)</span></a
+                    >
+                  </li>
+                  
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </header>
+        <div class="container">
+            <h4>Un code d'activation vous a été envoyé par mail !!!</h4>
+            <p>Veuillez renseigner ce code.</p>
+            <form th:action="@{/api/activation}" method="post" th:object="${validation}" >
+                <label for="creerTontine">
+                    Mon code d'activation est le:
+                    <input type="text" th:field="*{code}" id="creerTontine" name="code" placeholder="Mon code" required>
+                </label>
+                <button type="submit">Valider</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

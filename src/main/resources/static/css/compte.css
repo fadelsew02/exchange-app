@@ -1,0 +1,345 @@
+/* Styles pour la section du héros (hero area) */
+.hero_area {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero_area .hero_bg_box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.hero_area .hero_bg_box .bg_img_box {
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.hero_area .hero_bg_box img {
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.sub_page .hero_area {
+    min-height: auto;
+    background: linear-gradient(130deg, #231a6f, #0f054c);
+}
+
+.sub_page .hero_area .hero_bg_box {
+    display: none;
+}
+
+/* Styles pour la section de l'en-tête (header) */
+.header_section {
+    padding: 15px 0;
+    background-color: #0c0485;
+}
+
+.header_section .container-fluid {
+    padding-right: 25px;
+    padding-left: 25px;
+}
+
+.navbar-brand span {
+    font-weight: bold;
+    font-size: 24px;
+    color: #eeeef3;
+}
+
+.custom_nav-container {
+    padding: 0;
+}
+
+.custom_nav-container .navbar-nav {
+    margin-left: auto;
+}
+
+.custom_nav-container .navbar-nav .nav-item .nav-link {
+    padding: 5px 20px;
+    color: #f7f7f9;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.custom_nav-container .navbar-nav .nav-item:hover .nav-link,
+.custom_nav-container .navbar-nav .nav-item.active .nav-link {
+    color: #00bbf0;
+}
+
+.custom_nav-container .navbar-nav .nav-item.active .nav-link {
+    font-weight: 600;
+}
+
+.custom_nav-container .nav_search-btn {
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    border: none;
+    color: #f8f7fb;
+}
+
+.custom_nav-container .nav_search-btn:hover {
+    color: #00bbf0;
+}
+
+.custom_nav-container .navbar-toggler {
+    outline: none;
+    padding: 0;
+    width: 37px;
+    height: 42px;
+    transition: all 0.3s;
+}
+
+.custom_nav-container .navbar-toggler span {
+    display: block;
+    width: 35px;
+    height: 4px;
+    background-color: #ffffff;
+    margin: 7px 0;
+    position: relative;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.custom_nav-container .navbar-toggler span::before,
+.custom_nav-container .navbar-toggler span::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff;
+    top: -10px;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.custom_nav-container .navbar-toggler span::after {
+    top: 10px;
+}
+
+.custom_nav-container .navbar-toggler[aria-expanded="true"] {
+    transform: rotate(360deg);
+}
+
+.custom_nav-container .navbar-toggler[aria-expanded="true"] span {
+    transform: rotate(45deg);
+}
+
+.custom_nav-container .navbar-toggler[aria-expanded="true"] span::before,
+.custom_nav-container .navbar-toggler[aria-expanded="true"] span::after {
+    transform: rotate(90deg);
+    top: 0;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+#left-section,
+#right-section {
+    width: 48%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#left-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profile-icon {
+    font-size: 60px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+#profile-image-input {
+    display: none;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+/* Nouveaux styles pour la section de droite */
+#right-section {
+    background-color: #fff;
+    text-align: center;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+#add-payment-btn {
+    background-color: #00bbf0;
+    color: white;
+    padding: 12px 24px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#add-payment-btn:hover {
+    background-color: #0088b0;
+}
+
+#payment-options {
+    margin-top: 30px;
+}
+
+.payment-option {
+    margin: 15px;
+    background-color: #2ecc71;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.payment-option:hover {
+    background-color: #27ae60;
+}
+
+.payment-option input {
+    text-align: center;
+    padding: 15px;
+    border: 1px solid #3498db;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+#confirm-bank-account-btn,
+#confirm-credit-card-btn {
+    background-color: #e74c3c;
+    color: white;
+    padding: 12px 24px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    margin-top: 15px;
+}
+
+#confirm-bank-account-btn:hover,
+#confirm-credit-card-btn:hover {
+    background-color: #c0392b;
+}
+
+#credit-card-input,
+#bank-account-input {
+    margin-top: 30px;
+}
+
+#credit-card-input label,
+#bank-account-input label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+#credit-card-input select,
+#bank-account-input select,
+#credit-card-input input,
+#bank-account-input input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+/* Ajout de styles pour rendre les labels et inputs alignés */
+#credit-card-input label,
+#bank-account-input label {
+    display: block;
+}
+
+#credit-card-input select,
+#bank-account-input select,
+#credit-card-input input,
+#bank-account-input input {
+    display: inline-block;
+    width: calc(100% - 24px);
+    margin-bottom: 15px;
+    vertical-align: middle;
+}
+
+#credit-card-input button,
+#bank-account-input button {
+    width: 100%;
+    padding: 12px;
+    background-color: #39f133;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#credit-card-input button:hover,
+#bank-account-input button:hover {
+    background-color: #c0392b;
+}
+
+
+/* Styles pour la section du pied de page (footer) */
+.footer_section {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #b1ae7c;
+    text-align: center;
+    padding: 25px 0;
+    margin-top: 3%;
+}
+
+.footer_section p {
+    color: #00204a;
+    padding: 25px 0;
+    margin: 0;
+}
+
+.footer_section p a {
+    color: inherit;
+}
