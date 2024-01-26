@@ -58,23 +58,28 @@ public class userController {
     // Endpoint pour s'enregistrer dans l'application
     @PostMapping("/api/inscription")
     public ModelAndView register(@ModelAttribute User user) {
-    	try {
-	        service.saveUsers(user);
-			ModelAndView modelAndView = new ModelAndView("confirmation");
-			modelAndView.addObject("message", "Inscription réussie!Veuillez confirmer le code");
+    	// try {
+			if (service.saveUsers(user)) {
+				ModelAndView modelAndView = new ModelAndView("confirmation");
+				modelAndView.addObject("validation", new Validation());
 
-		    return modelAndView;       
-	    } catch (DuplicateKeyException e) {
-			ModelAndView modelAndView = new ModelAndView("register");
-			modelAndView.addObject("error",  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("L'user avec cet email existe déjà"));
+				return modelAndView; 
+				// return "redirect:/confirmation";
+			}
+	        
+			return null;
+			      
+	    // } catch (DuplicateKeyException e) {
+		// 	ModelAndView modelAndView = new ModelAndView("register");
+		// 	modelAndView.addObject("error",  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("L'user avec cet email existe déjà"));
 
-			return modelAndView;
-	    } catch (DataAccessException e) {
-			ModelAndView modelAndView = new ModelAndView("register");
-			modelAndView.addObject("error", ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Échec de l'enregistrement en raison d'une erreur interne"));
+		// 	return modelAndView;
+	    // } catch (DataAccessException e) {
+		// 	ModelAndView modelAndView = new ModelAndView("register");
+		// 	modelAndView.addObject("error", ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Échec de l'enregistrement en raison d'une erreur interne"));
 
-			return modelAndView;
-	    } 
+		// 	return modelAndView;
+	    // } 
     }
 
 	// Endpoint pour l'activation de compte
