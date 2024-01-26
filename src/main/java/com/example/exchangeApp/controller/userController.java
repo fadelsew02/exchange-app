@@ -94,7 +94,7 @@ public class userController {
 
 	// Endpoint pour se connecter dans l'application
 	@PostMapping("/api/connexion")
-	public ModelAndView login(@ModelAttribute User user, HttpSession session) {
+	public Map<String, String> login(@ModelAttribute User user, HttpSession session) {
 		AuthenticationDTO authenticationDTO = new AuthenticationDTO(user.getEmail(), user.getPassword());
 	    final Authentication authenticate = authenticationManager.authenticate(
 			new UsernamePasswordAuthenticationToken(authenticationDTO.username(), authenticationDTO.password())
@@ -106,10 +106,11 @@ public class userController {
 			// User loggedInUser = (User) session.getAttribute("loggedInUser");  
 			ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
 			// modelAndView.addObject("loggedInUser", loggedInUser);
-			modelAndView.addObject("TransactionRequest", new TransactionRequest());
-			modelAndView.addObject("TransactionRequestDevise", new TransactionRequest());
+			// modelAndView.addObject("TransactionRequest", new TransactionRequest());
+			// modelAndView.addObject("TransactionRequestDevise", new TransactionRequest());
 
-			return modelAndView;
+			// return modelAndView;
+			return token;
 			
 		}
 		return null;
@@ -148,27 +149,27 @@ public class userController {
 		}
 	}
 
-	private String userSourceEmail;
-    private String userDestinationEmail;
-    private Double transactionAmount;
-    private String deviseSource;
-    private String deviseDestination;
+	// private String userSourceEmail;
+    // private String userDestinationEmail;
+    // private Double transactionAmount;
+    // private String deviseSource;
+    // private String deviseDestination;
 	
 
-	@PostMapping("/transfer-money")
-	public ModelAndView transferMoney(@ModelAttribute TransactionRequest transactionRequest) {
-		TransferRequestDTO transferRequestDTO = new TransferRequestDTO(transactionRequest.getUserDestinationEmail(), transactionRequest.getTransactionAmount(), transactionRequest.getDeviseDestination());
-	    try {
-			this.service.transferMoney(transferRequestDTO);
-			ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
-		modelAndView.addObject("devise", transferRequestDeviseDTO.devise());
-			return modelAndView;
-		} catch (Exception e) {
-			ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
-		modelAndView.addObject("error", "Une erreur est survenue");
-			return modelAndView;
-		}
-	}
+	// @PostMapping("/transfer-money")
+	// public ModelAndView transferMoney(@ModelAttribute TransactionRequest transactionRequest) {
+	// 	TransferRequestDTO transferRequestDTO = new TransferRequestDTO(transactionRequest.getUserDestinationEmail(), transactionRequest.getTransactionAmount(), transactionRequest.getDeviseDestination());
+	//     try {
+	// 		this.service.transferMoney(transferRequestDTO);
+	// 		ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
+	// 	modelAndView.addObject("devise", transferRequestDeviseDTO.devise());
+	// 		return modelAndView;
+	// 	} catch (Exception e) {
+	// 		ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
+	// 	modelAndView.addObject("error", "Une erreur est survenue");
+	// 		return modelAndView;
+	// 	}
+	// }
 
 	
 	

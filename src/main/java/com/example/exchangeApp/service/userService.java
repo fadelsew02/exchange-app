@@ -96,22 +96,23 @@ public class userService implements UserDetailsService {
 	}
 
 
-	public boolean tranferMoney(TransferRequestDeviseDTO transferRequestDeviseDTO){
+	// public boolean tranferMoney(TransferRequestDeviseDTO transferRequestDeviseDTO){
 		   
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = userDetails.getUsername();
+	// 	// UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	// 	// String username = userDetails.getUsername();
 
-		Optional<User> user1 = repo.findByEmail(username); 
+	// 	// Optional<User> user1 = repo.findByEmail(username); 
 
-		if (user1.isPresent()) {
-			User user = user1.get();
-			user.setDevise(transferRequestDeviseDTO.devise());
-			repo.save(user);
-			return true; 
-		} else {
-			return false; 
-		}	
-	}
+	// 	// if (user1.isPresent()) {
+	// 	// 	User user = user1.get();
+	// 	// 	user.setDevise(transferRequestDeviseDTO.devise());
+	// 	// 	repo.save(user);
+	// 	// 	return true; 
+	// 	// } else {
+	// 	// 	return false; 
+	// 	// }	
+	// 	return true;
+	// }
 
 	@Override
     public User loadUserByUsername(final String username) throws UsernameNotFoundException {

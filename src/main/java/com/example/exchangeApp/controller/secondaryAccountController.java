@@ -15,7 +15,7 @@ public class secondaryAccountController {
 	@Autowired
 	private secondaryAccountService service;
 
-	@PostMapping("/transfer-money")
+	@PostMapping("/trans-money")
     public ResponseEntity<String> transferMoney(@RequestBody TransactionRequest transactionRequest) {
 			
 		if(service.pullTransaction(transactionRequest)){

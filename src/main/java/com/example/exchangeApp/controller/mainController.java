@@ -51,13 +51,13 @@ public class mainController {
 		return modelAndView;
     }
 
-    // @GetMapping("/dashboard")
-    // public String dashboard(Model model, HttpSession session) {
-    //     User loggedInUser = (User) session.getAttribute("loggedInUser");    
-    //     model.addAttribute("loggedInUser", loggedInUser);
+    @GetMapping("/dashboard")
+    public String dashboard(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");    
+        model.addAttribute("loggedInUser", loggedInUser);
 
-    //     return "dashboard";
-    // }
+        return "dashboard";
+    }
 
     @GetMapping("/mon-compte")
     public String compte(Model model, HttpSession session) {
