@@ -104,7 +104,7 @@
                     >Mes transactions</a
                   >
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" th:href="@{/}">Se déconnecter</a>
+                  <a class="dropdown-item" th:href="@{/deconnexion}">Se déconnecter</a>
                 </div>
               </li>
               <form class="form-inline">
@@ -125,15 +125,19 @@
       <div class="row">
         <div class="col-sm-6">
           <h3>Transfert</h3>
-          <form th:action="@{/transfer-money}" method="post" onsubmit="return validateForm()">
+          <form th:action="@{/transfer-money}" method="post" onsubmit="return validateForm()" th:object="${TransactionRequest}">
             <div class="form-group">
               <label for="montant">Email destinataire:</label>
               <input
                 type="text"
                 class="form-control"
                 id="email"
+                th:field="*{userDestinationEmail}"
                 placeholder="Entrer l'Email du destinataire"
               />
+            </div>
+            <div th:if="${#fields.hasErrors('userDestinationEmail')}" class="alert alert-danger" role="alert" id="error-message">
+              <p th:errors="*{userDestinationEmail}"></p>
             </div>
             <div class="form-group">
               <label for="compte">Montant:</label>
@@ -141,22 +145,22 @@
                 type="text"
                 class="form-control"
                 id="Montant"
+                th:field="*{transactionAmount}"
                 placeholder="Entrer le montant"
               />
             </div>
             <div class="form-group">
               <label for="moyenPaiement">Devise de reception:</label>
-              <select name="currencySelect" class="form-control" id="moyenPaiement" >
-                <option value="euro">Euro</option>
-                <option value="dollars">Dollars</option>
-                <option value="yens">Yens</option>
-                <option value="livreSterling">Livre Sterling</option>
+              <select name="currencySelect" class="form-control" id="moyenPaiement" th:field="*{deviseDestination}" >
+                <option th:each="currency : ${currencies}" th:value="${currency.name}" th:text="${currency.name + ' (' + currency.code + ')'}"></option>
               </select>
             </div>
             <div class="form-group">
               <label for="moyenPaiement">Moyen de paiement:</label>
-              <select class="form-control" id="moyenPaiement">
-                <option>Carte de crédit</option>
+              <select class="form-control" id="moyenPaiement" th:field="*{paymentOption}">
+                <option value="e-transfert">e-transfert (mon solde)</option>
+                <option value="creditCard">Carte de crédit</option>
+                <option value="accountBank">Compte Bancaire</option>
               </select>
             </div>
             <button type="submit"  class="btn btn-primary">Transférer</button>
@@ -183,21 +187,19 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form th:action="@{/choose-devise}" method="post"  >
+                <form th:action="@{/choose-devise}" method="post" th:object="${TransactionRequestDevise}" >
                   <div class="form-group">
                     <label for="currencySelect">Sélectionnez la devise :</label>
-                    <select class="form-control" id="currencySelect" >
-                      <option value="euro">Euro</option>
-                      <option value="dollars">Dollars</option>
-                      <option value="yens">Yens</option>
-                      <option value="livreSterling">Livre Sterling</option>
-                    </select>
+                    <select class="form-control" id="currencySelect" th:field="*{deviseSource}">
+                      <option th:each="currency : ${currencies}" th:value="${currency.name}" th:text="${currency.name + ' (' + currency.code + ')'}"></option>
+                  </select>
+                  
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary" id="saveCurrencyBtn">Enregistrer</button>
                   </div>
                 </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                <button type="submit" class="btn btn-primary" id="saveCurrencyBtn">Enregistrer</button>
               </div>
             </div>
           </div>
@@ -244,6 +246,41 @@
         var isAmountValid = validateAmount();
         return isEmailValid && isAmountValid;
       }
-      </script>
+    </script> 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script type="text/javascript">
+      function checkEmailExistence() {
+          var emailInput = $('#email');
+          var email = emailInput.val();
+          $.ajax({
+              url: '/api/check-email-existence?email=' + email,
+              type: 'GET',
+              success: function (response) {
+                  var deviseInput = $('#moyenPaiement');
+                  var deviseSelect = $('#moyenPaiement');
+                  if (response.exists) {
+                      deviseInput.val(response.devise);
+                      $('#error-message').hide();
+                      // deviseSelect.find('option:not(:selected)').prop('disabled', true);
+                  } else {
+                      // L'e-mail n'existe pas, afficher un message d'erreur
+                      deviseInput.val(''); // Réinitialiser le champ devise
+                      $('#error-message').show();
+  
+                      // Réactiver toutes les options du champ de sélection
+                      deviseSelect.find('option').prop('disabled', false);
+                  }
+              },
+              error: function () {
+                  console.error('Erreur lors de la requête API.');
+              }
+          });
+      }
+  
+      // Attacher la fonction checkEmailExistence à l'événement blur du champ email
+      $('#email').on('blur', checkEmailExistence);
+  </script>
+  
+    
   </body>
 </html>

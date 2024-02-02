@@ -2,6 +2,7 @@ package com.example.exchangeApp.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,13 +41,13 @@ public class User implements UserDetails {
     private String email;
 
     @Column
-    private Double solde;
-
-    @Column
     private String password;
 
     @Column
     private String tel;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private CompteUtilisateur compteUtilisateur;
 
     @Column
     private boolean actif = false;

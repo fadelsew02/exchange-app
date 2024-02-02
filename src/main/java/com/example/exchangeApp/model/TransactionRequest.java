@@ -10,6 +10,7 @@ public class TransactionRequest {
     private Double transactionAmount;
     private String deviseSource;
     private String deviseDestination;
+    private String paymentOption;
 }
 
 

@@ -2,21 +2,40 @@ package com.example.exchangeApp.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
-import jakarta.servlet.http.HttpSession;
 
+import com.example.exchangeApp.model.Currency;
+import com.example.exchangeApp.model.CreditCard;
+import com.example.exchangeApp.model.TransactionRequest;
 import com.example.exchangeApp.model.User;
 import com.example.exchangeApp.model.Validation;
+import com.example.exchangeApp.service.BankService;
+import com.example.exchangeApp.service.CurrencyService;
 
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
 @RequestMapping("/")
 
-public class mainController {
+public class mainController{
+
+    @Autowired
+	BankService bankService;
+    @Autowired
+	CurrencyService currencyService;
+ 
+
 
     @GetMapping("/")
     public String index() {
+
+        boolean bool = bankService.SaveBank();
+        boolean bool2 = currencyService.SaveCurrency();
         return "index";
     }
     
@@ -52,31 +71,75 @@ public class mainController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");    
-        model.addAttribute("loggedInUser", loggedInUser);
+    public String dashboard(Model model) {
+        List<Currency> currencies = new ArrayList<>();
+        currencies.add(new Currency("EUR", "Euro"));
+        currencies.add(new Currency("USD", "US Dollar"));
+        currencies.add(new Currency("CFA", "Francs CFA"));
+		currencies.add(new Currency("JPY", "Japanese Yen"));
+        currencies.add(new Currency("BGN", "Bulgarian Lev"));
+		currencies.add(new Currency("CZK", "Czech Republic Koruna"));
+        currencies.add(new Currency("DKK", "Danish Krone"));
+		currencies.add(new Currency("GBP", "British Pound Sterling"));
+        currencies.add(new Currency("HUF", "Hungarian Forint"));
+		currencies.add(new Currency("PLN", "Polish Zloty"));
+        currencies.add(new Currency("RON", "Romanian Leu"));
+		currencies.add(new Currency("SEK", "Swedish Krona"));
+        currencies.add(new Currency("CHF", "Swiss Franc"));
+		currencies.add(new Currency("ISK", "Icelandic Króna"));
+        currencies.add(new Currency("NOK", "Norwegian Krone"));
+		currencies.add(new Currency("HRK", "Croatian Kuna"));
+        currencies.add(new Currency("RUB", "Russian Ruble"));
+		currencies.add(new Currency("HKD", "Hong Kong Dollar"));
+        currencies.add(new Currency("TRY", "Turkish Lira"));
+		currencies.add(new Currency("AUD", "Australian Dollar"));
+        currencies.add(new Currency("BRL", "Brazilian Real"));
+		currencies.add(new Currency("CAD", "Canadian Dollar"));
+        currencies.add(new Currency("CNY", "Chinese Yuan"));
+		currencies.add(new Currency("IDR", "Indonesian Rupiah"));
+		currencies.add(new Currency("ILS", "Israeli New Sheqel"));
+        currencies.add(new Currency("INR", "Indian Rupee"));
+		currencies.add(new Currency("KRW", "South Korean Won"));
+        currencies.add(new Currency("MXN", "Mexican Peso"));
+		currencies.add(new Currency("SGD", "Singapore Dollar"));
+
+        Currency currency = new Currency();
+        System.out.println(currencies);
+        for (Currency curren : currencies) {
+            currency.setCode(curren.getCode());
+            currency.setName(curren.getName());
+        }
+
+        model.addAttribute("TransactionRequest", new TransactionRequest());
+		model.addAttribute("TransactionRequestDevise", new TransactionRequest());
+        model.addAttribute("currencies", currencies);
+
 
         return "dashboard";
     }
 
     @GetMapping("/mon-compte")
-    public String compte(Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");    
-        model.addAttribute("loggedInUser", loggedInUser);
-
+    public String compte(Model model) {
+        model.addAttribute("CreditCardInformation", new CreditCard());
         return "compte";
     }
 
     @GetMapping("/mes-transactions")
-    public String transactions(Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");    
-        model.addAttribute("loggedInUser", loggedInUser);
+    public String transactions(Model model) {
 
         return "transaction";
     }
 
-}
+    @GetMapping("/transfer-money")
+    public String transferMoney(Model model) {
+       	model.addAttribute("TransactionRequest", new TransactionRequest());
+		model.addAttribute("TransactionRequestDevise", new TransactionRequest());
 
+        return "transaction";
+    }
+
+
+}
 
 
 

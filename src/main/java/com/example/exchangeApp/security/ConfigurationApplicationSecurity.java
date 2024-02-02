@@ -56,17 +56,16 @@ public class ConfigurationApplicationSecurity{
                         .authorizeHttpRequests(
                                 authorize ->
                                         authorize
-                                                .requestMatchers("/**").permitAll()
+                                                .requestMatchers("/**", "/api/check-email-existence/**").permitAll()
                                                 .requestMatchers("/refresh-token").permitAll()
-                                                .anyRequest().authenticated()
+                                                // .anyRequest().authenticated()
                         )
                         .sessionManagement(sessionManagement ->
                             sessionManagement
                                     .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // Ou une autre politique selon vos besoins
-                                    .invalidSessionUrl("/login?invalidSession=true") // URL de redirection en cas de session invalide
                                     .sessionFixation().migrateSession() // Stratégie de fixation de session
                                     .maximumSessions(1) // Nombre maximal de sessions autorisées par utilisateur
-                                        .expiredUrl("/login?sessionExpired=true") // URL de redirection en cas de session expirée
+                
                             )
                         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                         .build();

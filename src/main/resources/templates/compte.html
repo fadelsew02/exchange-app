@@ -1,175 +1,204 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <!-- Basic -->
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!-- Mobile Metas -->
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <!-- Site Metas -->
-        <meta name="keywords" content="" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <link rel="shortcut icon" href="images/favicon.png" type="">
-      
-        <title> e-Transfert </title>
-      
-        <!-- bootstrap core css -->
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-      
-        <!-- fonts style -->
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-      
-        <!--owl slider stylesheet -->
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-      
-        <!-- font awesome style -->
-         <!-- font awesome style -->
-       <link rel="stylesheet" th:href="@{../css/responsive.css}">
-       <link rel="stylesheet" th:href="@{../css/font-awesome.min.css}">
+  <head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content />
+    <meta name="description" content />
+    <meta name="author" content />
+    <link rel="shortcut icon" href="images/favicon.png" type>
 
-       <link rel="stylesheet" th:href="@{../css/style.css}">
-       <link rel="stylesheet" th:href="@{../css/compte.css}">
-      
-      </head>
-      
-<body>
-  <!-- header section strats -->
- <header class="header_section">
-  <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg custom_nav-container ">
-      <a class="navbar-brand" th:href="@{/}">
-        <span>
-          e-TRANSFERT
-        </span>
-      </a>
+    <title> e-Transfert </title>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class=""> </span>
-      </button>
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav  ">
-          <li class="nav-item ">
-            <a class="nav-link" th:href="@{/}">Accueil <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" th:href="@{/monnaies}"> Nos monnaies</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" th:href="@{/reviews}">Appreciations</a>
-          </li>
+    <!-- fonts style -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"
+      rel="stylesheet">
 
-          <li class="nav-item">
-            <a class="nav-link" th:href="@{/contact}">Contact</a>
-          </li>
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Profil
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" th:href="@{/dashboard}">Dashboard</a>
-                <a class="dropdown-item" th:href="@{/mon-compte}">Mon compte</a>
-                <a class="dropdown-item" th:href="@{/mes-transactions}">Mes transactions</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" th:href="@{/}">Se déconnecter</a>
-              </div>
-            </li>
-          <form class="form-inline">
-            <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
-              <i class="fa fa-search" aria-hidden="true"></i>
-            </button>
-          </form>
-        </ul>
+    <!--owl slider stylesheet -->
+    <link rel="stylesheet" type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+    <!-- font awesome style -->
+    <!-- font awesome style -->
+    <link rel="stylesheet" th:href="@{../css/responsive.css}">
+    <link rel="stylesheet" th:href="@{../css/font-awesome.min.css}">
+
+    <link rel="stylesheet" th:href="@{../css/style.css}">
+    <link rel="stylesheet" th:href="@{../css/compte.css}">
+
+  </head>
+
+  <body>
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" th:href="@{/}">
+            <span>
+              e-TRANSFERT
+            </span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  ">
+              <li class="nav-item ">
+                <a class="nav-link" th:href="@{/}">Accueil <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/monnaies}"> Nos monnaies</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/reviews}">Appreciations</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/contact}">Contact</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                  role="button" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">
+                  Profil
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" th:href="@{/dashboard}">Dashboard</a>
+                  <a class="dropdown-item" th:href="@{/mon-compte}">Mon compte</a>
+                  <a class="dropdown-item" th:href="@{/mes-transactions}">Mes
+                    transactions</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" th:href="@{/}">Se déconnecter</a>
+                </div>
+              </li>
+              <form class="form-inline">
+                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+              </form>
+            </ul>
+          </div>
+        </nav>
       </div>
-    </nav>
-  </div>
-</header>
-<!-- end header section -->
+    </header>
+    <!-- end header section -->
 
-  <main>
-    <section id="left-section">
+    <main>
+      <section id="left-section">
         <!-- Ajout de l'élément img pour afficher l'image sélectionnée -->
-        <img src="#" alt="Photo de profil" id="profile-preview" style="display: none;">
+        <img src="#" alt="Photo de profil" id="profile-preview"
+          style="display: none;">
         <div id="profile-icon">+</div>
         <input type="file" id="profile-image-input">
-  
+
         <table class="table">
-            <tr>
-                <th>Nom</th>
-                <td>Votre Nom</td>
-            </tr>
-            <tr>
-                <th>Prénom</th>
-                <td>Votre Prénom</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>votre@email.com</td>
-            </tr>
-            <tr>
-                <th>Téléphone</th>
-                <td>Votre Numéro</td>
-            </tr>
+          <tr>
+            <th>Nom</th>
+            <td>Votre Nom</td>
+          </tr>
+          <tr>
+            <th>Prénom</th>
+            <td>Votre Prénom</td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td>votre@email.com</td>
+          </tr>
+          <tr>
+            <th>Téléphone</th>
+            <td>Votre Numéro</td>
+          </tr>
         </table>
-    </section>
+      </section>
 
-
-    <section id="right-section">
-      <button class="btn btn-outline-success" id="add-payment-btn">+ Ajouter Moyen de Paiement</button>
-      <div id="payment-options">
-          <button class="btn btn-outline-success" id="add-credit-card-btn">Ajouter Carte de Crédit</button>
-          <button class="btn btn-outline-success" id="add-bank-account-btn">Ajouter Compte Bancaire</button>
+      <section id="right-section">
+        <button class="btn btn-outline-success" id="add-payment-btn">+ Ajouter
+          Moyen de Paiement</button>
+        <div id="payment-options">
+          <button class="btn btn-outline-success" id="add-credit-card-btn">Ajouter
+            Carte de Crédit</button>
+          <button class="btn btn-outline-success" id="add-bank-account-btn">Ajouter
+            Compte Bancaire</button>
           <div id="credit-card-input" style="display: none;">
-            <form style="display: flex; flex-direction: column;">
-                <label for="credit-card">Numéro de Carte :</label>
-                <input type="text" id="credit-card" placeholder="1234 5678 9012 3456" pattern="\d{4} \d{4} \d{4} \d{4}" required />
-                <label for="credit-card">Date d'expiration :</label>
-                <input type="text" id="expiration-date" placeholder="MM/AA" pattern="\d{2}/\d{2}" required />
-                <label for="credit-card">Code de vérification :</label>
-                <input type="text" id="cvv" placeholder="123" pattern="\d{3}" required />
-                <label for="credit-card">Adresse de facturation :</label>
-                <input type="text" id="billing-address" placeholder="123 Main Street, Cityville, Pays" />
-                <label for="moyenPaiement">Type de carte:</label>
-                <select id="card-type" required>
-                    <option>Visa</option>
-                    <option>Master card</option>
-                    <option>American Express</option>
-                </select>
-                <button id="confirm-credit-card-btn" style="margin-top: 15px;">Ajouter</button>
+            <form th:action="@{/api/addCreditCard}" method="post"
+              th:object="${CreditCardInformation}"
+              style="display: flex; flex-direction: column;">
+              <label for="credit-card">Numéro de Carte :</label>
+              <input type="text" id="credit-card"
+                placeholder="1234 5678 9012 3456"
+                th:field="*{cardNumber}"
+                pattern="\d{4} \d{4} \d{4} \d{4}" required />
+              <label for="credit-card">Date d'expiration :</label>
+              <input type="text" id="expiration-date" placeholder="MM/AA"
+                th:field="*{expirationDate}"
+                pattern="\d{2}/\d{2}" required />
+              <label for="credit-card">Code de vérification :</label>
+              <input type="text" id="cvv" placeholder="123" pattern="\d{3}"
+                th:field="*{checkingCode}"
+                required />
+              <label for="credit-card">Adresse de facturation :</label>
+              <input type="text" id="billing-address"
+                th:field="*{facturationAdress}"
+                placeholder="123 Main Street, Cityville, Pays" />
+              <label for="moyenPaiement">Type de carte:</label>
+              <select id="card-type" th:field="*{cardType}" required>
+                <option>Visa</option>
+                <option>Master card</option>
+                <option>American Express</option>
+              </select>
+              <button id="confirm-credit-card-btn" style="margin-top: 15px;">Ajouter</button>
             </form>
-        </div>
-        <div id="bank-account-input" style="display: none;">
-          <form style="display: flex; flex-direction: column;">
+          </div>
+          <div id="bank-account-input" style="display: none;">
+            <form style="display: flex; flex-direction: column;">
               <label for="bank-account-number">Numéro de Compte :</label>
-              <input type="text" id="bank-account-number" placeholder="123456789012" pattern="\d{12}" required />
-      
+              <input type="text" id="bank-account-number"
+                placeholder="123456789012" pattern="\d{12}" required />
+
               <label for="bank-name">Nom de la Banque:</label>
               <select id="bank-name" required>
-                  <option>BOA</option>
-                  <option>Ecobank</option>
-                  <option>NSIA</option>
+                <option>BOA</option>
+                <option>Ecobank</option>
+                <option>NSIA</option>
               </select>
-      
-              <label for="iban-number">Numéro IBAN :</label>
-              <input type="text" id="iban-number" placeholder="Entrez le numéro IBAN" pattern="[A-Z]{2}\d{2}[A-Za-z\d]{11,30}" required />
-      
-              <label for="account-type">Type de compte:</label>
-              <input type="text" id="account-type" placeholder="Entrez le type de compte" required />
-      
-              <label for="auto-transactions">Autorisation transactions automatiques :</label>
-              <select id="auto-transactions" required>
-                  <option>Oui</option>
-                  <option>Non</option>
-              </select>
-      
-              <button id="confirm-bank-account-btn" style="margin-top: 15px;">Ajouter</button>
-          </form>
-      </div>
-    </section>
-</main>
 
-<script>
+              <label for="iban-number">Numéro IBAN :</label>
+              <input type="text" id="iban-number"
+                placeholder="Entrez le numéro IBAN"
+                pattern="[A-Z]{2}\d{2}[A-Za-z\d]{11,30}" required />
+
+              <label for="account-type">Type de compte:</label>
+              <input type="text" id="account-type"
+                placeholder="Entrez le type de compte" required />
+
+              <label for="auto-transactions">Autorisation transactions
+                automatiques :</label>
+              <select id="auto-transactions" required>
+                <option>Oui</option>
+                <option>Non</option>
+              </select>
+
+              <button id="confirm-bank-account-btn" style="margin-top: 15px;">Ajouter</button>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <script>
   document.addEventListener('DOMContentLoaded', function () {
     var profileImageInput = document.getElementById('profile-image-input');
     var profilePreview = document.getElementById('profile-preview');
@@ -191,49 +220,44 @@
   });
 </script>
 
+      <!-- footer section -->
+      <section class="footer_section">
+        <div class="container">
+          <p>
+            &copy; <span id="displayYear"></span> Copyright
+            <a href="https://html.design/">Application e-Transfert</a>
+          </p>
+        </div>
+      </section>
+      <!-- footer section -->
 
-
-
-     <!-- footer section -->
-  <section class="footer_section">
-    <div class="container">
-      <p>
-        &copy; <span id="displayYear"></span> Copyright
-        <a href="https://html.design/">Application e-Transfert</a>
-      </p>
-    </div>
-  </section>
-  <!-- footer section -->
-
-
-  <!-- Ajout de Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-  integrity="sha384-pzjw8HP2wByMx5F0aPcyP5RrT9mN9TUj2XexAId+QUiGpDd+9Dd2bbmh2ZrMKK1"
-  crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
-  integrity="sha384-eT0XH6fIc2KbJHAWeXoAJSqfht+5fz1JzjrloINnb8a3A3tU2P+GD1vUh9GZLlK6"
-  crossorigin="anonymous"></script>
-  <!-- jQery -->
-  <script type="text/javascript" src="./javascript/jquery-3.4.1.min.js"></script>
-  <!-- popper js -->
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+      <!-- Ajout de Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-pzjw8HP2wByMx5F0aPcyP5RrT9mN9TUj2XexAId+QUiGpDd+9Dd2bbmh2ZrMKK1"
+        crossorigin="anonymous"></script>
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+        integrity="sha384-eT0XH6fIc2KbJHAWeXoAJSqfht+5fz1JzjrloINnb8a3A3tU2P+GD1vUh9GZLlK6"
+        crossorigin="anonymous"></script>
+      <!-- jQery -->
+      <script type="text/javascript" src="./javascript/jquery-3.4.1.min.js"></script>
+      <!-- popper js -->
+      <script
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous">
   </script>
-  <!-- bootstrap js -->
-  <script type="text/javascript" src="./javascript/bootstrap.js"></script>
-  <!-- owl slider -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+      <!-- bootstrap js -->
+      <script type="text/javascript" src="./javascript/bootstrap.js"></script>
+      <!-- owl slider -->
+      <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
   </script>
-  <!-- custom js -->
-  <script type="text/javascript" src="./javascript/custom.js"></script>
-   <!-- compte js -->
-   <script type="text/javascript" src="./javascript/compte.js"></script>
-  <!-- Google Map -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
-  </script>
-  <!-- End Google Map -->
-</body>
-</html>
-
-
-
+      <!-- custom js -->
+      <script type="text/javascript" src="./javascript/custom.js"></script>
+      <!-- compte js -->
+      <script type="text/javascript" src="./javascript/compte.js"></script>
+    </body>
+  </html>

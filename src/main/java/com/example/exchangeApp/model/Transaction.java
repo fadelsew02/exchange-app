@@ -1,5 +1,7 @@
 package com.example.exchangeApp.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,6 +44,14 @@ public class Transaction {
     @Column
 	@Nonnull
 	private String devise_destination;
+
+    @Column
+    @Nonnull
+    private LocalDateTime transactionDateTime; 
+
+    @Column
+    @Nonnull
+    private String paymentOptions;
 
 }
 

@@ -48,6 +48,7 @@ public class JwtService {
     }
     public Map<String, String> generate(String username) {
         User User = this.userService.loadUserByUsername(username);
+        // System.out.println(User);
         this.disableTokens(User);
         final Map<String, String> jwtMap = new java.util.HashMap<>(this.generateJwt(User));
 
@@ -84,6 +85,7 @@ public class JwtService {
     }
 
     public String extractUsername(String token) {
+        System.out.println(this.getClaim(token, Claims::getSubject));
         return this.getClaim(token, Claims::getSubject);
     }
 
@@ -134,11 +136,10 @@ public class JwtService {
         return Keys.hmacShaKeyFor(decoder);
     }
 
-    public void deconnexion(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
+    public boolean deconnexion(HttpSession session) {
 
         if (session != null) {
-            User loggedInUser = (User) session.getAttribute("loggedInUser");
+            User loggedInUser = (User) session.getAttribute("userConnected");
 
             Jwt jwt = this.jwtRepository.findUserValidToken(
                 loggedInUser.getEmail(),
@@ -150,7 +151,9 @@ public class JwtService {
             jwt.setDesactive(true);
 
             this.jwtRepository.save(jwt);
+            return true;
         }
+        return false;
     }
 
 

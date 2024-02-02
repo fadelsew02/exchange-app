@@ -9,11 +9,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.example.exchangeApp.model.User;
 import com.example.exchangeApp.model.Validation;
+import com.example.exchangeApp.model.Bank;
+import com.example.exchangeApp.model.ComptePrincipal;
+import com.example.exchangeApp.model.CompteUtilisateur;
 import com.example.exchangeApp.model.Role;
 import com.example.exchangeApp.TypeDeRole;
 import com.example.exchangeApp.dto.TransferRequestDeviseDTO;
 import com.example.exchangeApp.repo.userRepo;
 
+import jakarta.persistence.Column;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -39,6 +44,10 @@ public class userService implements UserDetailsService {
 		return repo.findByEmail(email);
 	}
 
+	public String getDeviseByEmail(String email) {
+		return repo.findDeviseByEmail(email);
+	}
+
     public boolean saveUsers(User user) {
 
 		final Optional<User> userOptional = repo.findByEmail(user.getEmail());
@@ -57,7 +66,12 @@ public class userService implements UserDetailsService {
         }
     	user.setRole(roleUser);
 
-        user = this.repo.save(user);
+		CompteUtilisateur compteUtilisateur = new CompteUtilisateur();
+		compteUtilisateur.setSoldeUtilisateur(5000.0);
+
+		user.setCompteUtilisateur(compteUtilisateur);
+
+		user = this.repo.save(user);
 
 		if (roleUser.getLibelle().equals(TypeDeRole.UTILISATEUR)) {
             this.validationService.enregistrer(user);
@@ -66,7 +80,6 @@ public class userService implements UserDetailsService {
 	}
 
 	public boolean activation(Map<String, String> activation) {
-		System.out.print(activation);
 		final Validation validation = this.validationService.lireEnFonctionDuCode(activation.get("code"));
 		if(Instant.now().isAfter(validation.getExpiration())){
 			throw new RuntimeException("Votre code a expiré");
@@ -77,42 +90,6 @@ public class userService implements UserDetailsService {
 
 		return true;
 	}
-
-	public boolean addDevise(TransferRequestDeviseDTO transferRequestDeviseDTO){
-		   
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = userDetails.getUsername();
-
-		Optional<User> user1 = repo.findByEmail(username); 
-
-		if (user1.isPresent()) {
-			User user = user1.get();
-			user.setDevise(transferRequestDeviseDTO.devise());
-			repo.save(user);
-			return true; 
-		} else {
-			return false; 
-		}	
-	}
-
-
-	// public boolean tranferMoney(TransferRequestDeviseDTO transferRequestDeviseDTO){
-		   
-	// 	// UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	// 	// String username = userDetails.getUsername();
-
-	// 	// Optional<User> user1 = repo.findByEmail(username); 
-
-	// 	// if (user1.isPresent()) {
-	// 	// 	User user = user1.get();
-	// 	// 	user.setDevise(transferRequestDeviseDTO.devise());
-	// 	// 	repo.save(user);
-	// 	// 	return true; 
-	// 	// } else {
-	// 	// 	return false; 
-	// 	// }	
-	// 	return true;
-	// }
 
 	@Override
     public User loadUserByUsername(final String username) throws UsernameNotFoundException {
