@@ -11,6 +11,23 @@ services:
       POSTGRES_PASSWORD: azerty
     ports:
       - 5433:5432
+  
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    volumes:
+      - redis_volume_data:/data
+    ports:
+      - 6379:6379
+  redis_insight:
+    image: redislabs/redisinsight:latest
+    container_name: redis_insight
+    restart: always
+    ports:
+      - 8001:8001
+    volumes:
+      - redis_insight_volume_data:/db
 
   adminer:
     image: adminer
@@ -26,3 +43,7 @@ services:
       - 5435:80
       # Change the number before : to the port the SMTP server should be accessible on
       - 5431:25
+
+volumes:
+  redis_volume_data:
+  redis_insight_volume_data:

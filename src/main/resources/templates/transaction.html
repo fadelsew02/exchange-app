@@ -1,137 +1,208 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head> <!-- Basic -->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- Site Metas -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <link rel="shortcut icon" href="images/favicon.png" type="">
-  
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="images/favicon.png" type="" />
+    <title>e-Transfer</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" th:href="@{../css/dashboard.css}" />
-       <!-- bootstrap core css -->
-       <link rel="stylesheet" type="text/css" th:href="@{../css/bootstrap.css}" />
-       <!-- fonts style -->
-       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-   
-       <!--owl slider stylesheet -->
-       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-   
-       <!-- font awesome style -->
-       <link rel="stylesheet" th:href="@{../css/responsive.css}">
-       <link rel="stylesheet" th:href="@{../css/font-awesome.min.css}">
-       <link rel="stylesheet" th:href="@{../css/transaction.css}" />
+    <link type="text/css" rel="stylesheet" th:href="@{../assets/css/style.css}" />
+   <!--  <link rel="stylesheet" href="assets/css/style.css"> -->
 </head>
+
 <body>
+    <div class="cont">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a th:href="@{#}">
+                        <span class="icon">
+                            <ion-icon name="logo-apple"></ion-icon>
+                        </span>
+                        <span class="title">e-Transfer</span>
+                    </a>
+                </li>
 
- <!-- header section strats -->
- <header class="header_section">
-    <div class="container-fluid">
-      <nav class="navbar navbar-expand-lg custom_nav-container ">
-        <a class="navbar-brand" th:href="@{/}">
-          <span>
-            e-TRANSFERT
-          </span>
-        </a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class=""> </span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav  ">
-            <li class="nav-item ">
-              <a class="nav-link" th:href="@{/}">Accueil <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/monnaies}"> Nos monnaies</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/reviews}">Appreciations</a>
-            </li>
-  
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/contact}">Contact</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Profil
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" th:href="@{/dashboard}">Dashboard</a>
-                  <a class="dropdown-item" th:href="@{/mon-compte}">Mon compte</a>
-                  <a class="dropdown-item" th:href="@{/mes-transactions}">Mes transactions</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" th:href="@{/}">Se déconnecter</a>
-                </div>
-              </li>
-            <form class="form-inline">
-              <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </button>
-            </form>
-          </ul>
+                <li>
+                    <a th:href="@{/dashboard}">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title"><button type="button" class="btn" id="transferButton ">Transférer
+                        </button></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title"><button type="button" class="btn" data-toggle="modal" data-target="#paymentOptionsModal">Paiement/Réception
+                        </button></span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/mes-transactions}">
+                        <span class="icon">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                        </span>
+                        <span class="title">Transactions</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/}">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Accueil</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/monnaies}">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Nos monnaies</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/reviews}">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Appréciations</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/contact}">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Contact</span>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title"><button type="button" class="btn" data-toggle="modal" data-target="#chooseCurrencyModal">Ma devise
+                        </button></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="help-outline"></ion-icon>
+                        </span>
+                        <span class="title"><button type="button" class="btn" data-toggle="modal" data-target="#profilModal">Profil
+                        </button></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title"><button type="button" class="btn" data-toggle="modal" data-target="#signOutModal">Sign Out
+                        </button></span>
+                    </a>
+                </li>
+            </ul>
         </div>
-      </nav>
-    </div>
-  </header>
-  <!-- end header section -->
+        <div class="main">
+            <div class="detailsTransactions">
+                <div class="recentOrders">
+                    <div class="cardHeader">
+                        <h2>Mes Transactions</h2>
+                    </div>
 
-  <section class="ok">
-    <h2 class="bo"><b>Transactions du Mois</b></h2>
-    <table>
-        <tr>
-            <th>Nom</th>
-            <th>Prenoms</th>
-            <th>Montant</th>
-            <th>Devise d'envoie</th>
-            <th>Devise de reception</th>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
-</section>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Email du Destinataire/Expéditeur</td>
+                                <td>Montant transféré</td>
+                                <td>Devise de Destination/Expédition</td>
+                                <td>Date</td>
+                                <td>Status</td>
+                            </tr>
+                        </thead>
 
-<!-- footer section -->
-<section class="footer_section">
-    <div class="container">
-      <p>
-        &copy; <span id="displayYear"></span> Copyright
-        <a href="https://html.design/">Application e-Transfert</a>
-      </p>
+                        <tbody>
+                            <tr th:each="transaction : ${AllTransactions}">
+                                <td th:text="${transaction.userEmail}"></td>
+                                <td th:text="${transaction.transactionAmount}"></td>
+                                <td th:text="${transaction.transactionCurrency}"></td>
+                                <td th:text="${transaction.transactionDateTime}"></td>
+                                <td>
+                                    <span th:class="${transaction.status == 'Destinataire' ? 'status delivered' : (transaction.status == 'Expéditeur' ? 'status pending' : '')}"><span th:text="${transaction.status}"></span>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-  </section>
-  <!-- footer section -->
+    <div id="externalModalContainer"></div>
+
+    <script>
+        // Fonction pour charger la modale depuis une autre page
+        function loadExternalModal() {
+            $.ajax({
+                url: '/dashboard', // Remplacez par le chemin correct vers votre page avec la modale
+                METHOD: 'GET',
+                success: function (response) {
+                    // Trouvez le contenu de la modale dans la réponse
+                    var modalContent = $(response).find('#transferModal');
+
+                    // Ajoutez le contenu au conteneur sur la page "/mes-transactions"
+                    $('#externalModalContainer').html(modalContent);
+
+                    // Affichez la modale une fois qu'elle a été ajoutée au DOM
+                    $('#transferModal').modal('show');
+                },
+                error: function () {
+                    console.error('Erreur lors du chargement de la modale externe.');
+                }
+            });
+        }
+
+        // Appeler la fonction pour charger la modale lors du chargement de la page
+        $("#transferButton").click(function () {
+            alert('cc')
+            loadExternalModal();
+        });
+    </script>
+
+
+    <script th:src="@{../assets/js/main.js}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
+
 </html>

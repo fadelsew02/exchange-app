@@ -8,10 +8,13 @@ import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
 @AllArgsConstructor
+
+@EqualsAndHashCode(callSuper=false)
 // @NoArgsConstructor
 @DiscriminatorValue("principal")
 public class ComptePrincipal extends Compte {

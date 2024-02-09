@@ -2,6 +2,7 @@ package com.example.exchangeApp.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +10,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.validation.BindingResult;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -28,7 +33,7 @@ import com.example.exchangeApp.model.User;
 import com.example.exchangeApp.model.Validation;
 import com.example.exchangeApp.security.JwtService;
 import com.example.exchangeApp.service.userService;
-
+import com.example.exchangeApp.dto.TransactionInfoDTO;
 import com.example.exchangeApp.model.ApiKey;
 
 import jakarta.servlet.http.HttpSession;
@@ -57,7 +62,6 @@ public class userController {
 			modelAndView.addObject("validation", new Validation());
 
 			return modelAndView;
-			// return "redirect:/confirmation";
 		}
 
 		return null;
@@ -79,9 +83,33 @@ public class userController {
 		return modelAndView;
 	}
 
+	@PutMapping("/api/editProfil")
+	public ModelAndView update(@ModelAttribute User user, BindingResult result) {
+
+	    // Vérifier les erreurs de validation 
+	    if(result.hasErrors()) {
+	        // Gérer les erreurs
+	        ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
+	        modelAndView.addObject("error", "cannot update this profile");
+	        return modelAndView; 
+	    }
+	    
+	    // Appeler le service pour mettre à jour l'utilisateur
+	    service.updateUser(user);
+	    
+	    // Créer le ModelAndView
+	    ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
+	    
+	    // Ajouter l'utilisateur mis à jour au modèle
+	    modelAndView.addObject("user", user);
+	    
+	    return modelAndView;
+	}
+
+
 	// Endpoint pour se connecter dans l'application
 	@PostMapping("/api/connexion")
-	public ModelAndView login(@ModelAttribute User user, HttpSession session) {
+	public ModelAndView login(@ModelAttribute User user, HttpSession session, RedirectAttributes redirectAttributes) {
 		AuthenticationDTO authenticationDTO = new AuthenticationDTO(user.getEmail(), user.getPassword());
 		final Authentication authenticate = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(authenticationDTO.username(), authenticationDTO.password()));
@@ -93,9 +121,25 @@ public class userController {
 				session.setAttribute("userConnected", userConnected);
 			}
 
+			Double solde = service.getSoldeUtilisateurConnecte(session);
+			Double sommeSortante = service.getSommeEnvoisUtilisateur(session);
+			Double sommeEntrante = service.getSommeReceptionsUtilisateur(session);
+			String devise = service.getDeviseUtilisateurConnecte(session);
+			/*String devise = service.getDeviseUtilisateurConnecte(session);*//**/
+			List<TransactionInfoDTO> allTransactions = service.getAllTransactionsForUser(session); 
+
+			List<TransactionInfoDTO> transactionsDone = allTransactions.size() > 6 ?
+																			    allTransactions.subList(0, 6) :
+																			    allTransactions;  
+
 			ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
+			redirectAttributes.addFlashAttribute("sommeSortante", sommeSortante);
+			redirectAttributes.addFlashAttribute("sommeEntrante", sommeEntrante);
+			redirectAttributes.addFlashAttribute("solde", solde);
+			redirectAttributes.addFlashAttribute("devise", devise);
+			redirectAttributes.addFlashAttribute("transactionsDone", transactionsDone);
+
 			return modelAndView;
-			// return token;
 
 		}
 		return null;

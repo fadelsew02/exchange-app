@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="images/favicon.png" type="" />
+
+    <title>Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" th:href="@{../css/dashboard.css}" />
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" th:href="@{../css/bootstrap.css}" />
+
+    <!-- fonts style -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--owl slider stylesheet -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+    />
+
+    <!-- font awesome style -->
+    <link rel="stylesheet" th:href="@{../css/responsive.css}" />
+    <link rel="stylesheet" th:href="@{../css/font-awesome.min.css}" />
+  </head>
+  <body>
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container">
+          <a class="navbar-brand" th:href="@{/}">
+            <span> e-TRANSFERT </span>
+          </a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/}"
+                  >Accueil <span class="sr-only">(current)</span></a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/monnaies}"> Nos monnaies</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/reviews}">Appreciations</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/contact}">Contact</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  th:href="@{#}"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Profil
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" th:href="@{/dashboard}">Dashboard</a>
+                  <a class="dropdown-item" th:href="@{/mon-compte}"
+                    >Mon compte</a
+                  >
+                  <a class="dropdown-item" th:href="@{/mes-transactions}"
+                    >Mes transactions</a
+                  >
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" th:href="@{/deconnexion}">Se déconnecter</a>
+                </div>
+              </li>
+              <form class="form-inline">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chooseCurrencyModal">
+                  Choisir la devise
+                </button>
+                
+              </form>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+
+    <div class="container">
+      <h2>Dashboard</h2>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>Transfert</h3>
+          <form th:action="@{/transfer-money}" method="post" onsubmit="return validateForm()" th:object="${TransactionRequest}">
+            <div class="form-group">
+              <label for="montant">Email destinataire:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                th:field="*{userDestinationEmail}"
+                placeholder="Entrer l'Email du destinataire"
+              />
+            </div>
+            <div th:if="${#fields.hasErrors('userDestinationEmail')}" class="alert alert-danger" role="alert" id="error-message">
+              <p th:errors="*{userDestinationEmail}"></p>
+            </div>
+            <div class="form-group">
+              <label for="compte">Montant:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Montant"
+                th:field="*{transactionAmount}"
+                placeholder="Entrer le montant"
+              />
+            </div>
+            <div class="form-group">
+              <label for="moyenPaiement">Devise de reception:</label>
+              <select name="currencySelect" class="form-control" id="moyenPaiement" th:field="*{deviseDestination}" >
+                <option th:each="currency : ${currencies}" th:value="${currency.name}" th:text="${currency.name + ' (' + currency.code + ')'}"></option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="moyenPaiement">Moyen de paiement:</label>
+              <select class="form-control" id="moyenPaiement" th:field="*{paymentOption}">
+                <option value="e-transfert">e-transfert (mon solde)</option>
+                <option value="creditCard">Carte de crédit</option>
+                <option value="accountBank">Compte Bancaire</option>
+              </select>
+            </div>
+            <button type="submit"  class="btn btn-primary">Transférer</button>
+          </form>
+        </div>
+        <div class="col-sm-6">
+          <h3>Statistiques</h3>
+          <ul class="list-group">
+            <li class="list-group-item">Transfert effectuer ce mois :</li>
+            <li class="list-group-item">Argent reçu ce mois : 2500€</li>
+            <li class="list-group-item">Argent envoyer ce mois : 1000€</li>
+          </ul>
+        </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="chooseCurrencyModal" tabindex="-1" role="dialog" aria-labelledby="chooseCurrencyModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="chooseCurrencyModalLabel">Choisir la Devise</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form th:action="@{/choose-devise}" method="post" th:object="${TransactionRequestDevise}" >
+                  <div class="form-group">
+                    <label for="currencySelect">Sélectionnez la devise :</label>
+                    <select class="form-control" id="currencySelect" th:field="*{deviseSource}">
+                      <option th:each="currency : ${currencies}" th:value="${currency.name}" th:text="${currency.name + ' (' + currency.code + ')'}"></option>
+                  </select>
+                  
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary" id="saveCurrencyBtn">Enregistrer</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer section -->
+    <section class="footer_section">
+      <div class="container">
+        <p>
+          &copy; <span id="displayYear"></span> Copyright
+          <a href="https://html.design/">Application e-Transfert</a>
+        </p>
+      </div>
+    </section>
+    <!-- footer section -->
+    <script>
+      function validateEmail() {
+        var email = document.getElementById("email").value;
+        
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!emailRegex.test(email)) {
+          alert("Veuillez entrer une adresse e-mail valide.");
+          return false;
+        }
+        return true;
+      }
+    
+      function validateAmount() {
+        var amount = document.getElementById("Montant").value;
+      
+        var amountRegex = /^\d+$/;
+        if (!amountRegex.test(amount)) {
+          alert("Veuillez entrer un montant valide (chiffres uniquement).");
+          return false;
+        }
+        return true;
+      }
+    
+      function validateForm() {
+        var isEmailValid = validateEmail();
+        var isAmountValid = validateAmount();
+        return isEmailValid && isAmountValid;
+      }
+    </script> 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script type="text/javascript">
+      function checkEmailExistence() {
+          var emailInput = $('#email');
+          var email = emailInput.val();
+          $.ajax({
+              url: '/api/check-email-existence?email=' + email,
+              type: 'GET',
+              success: function (response) {
+                  var deviseInput = $('#moyenPaiement');
+                  var deviseSelect = $('#moyenPaiement');
+                  if (response.exists) {
+                      deviseInput.val(response.devise);
+                      $('#error-message').hide();
+                      // deviseSelect.find('option:not(:selected)').prop('disabled', true);
+                  } else {
+                      // L'e-mail n'existe pas, afficher un message d'erreur
+                      deviseInput.val(''); // Réinitialiser le champ devise
+                      $('#error-message').show();
+  
+                      // Réactiver toutes les options du champ de sélection
+                      deviseSelect.find('option').prop('disabled', false);
+                  }
+              },
+              error: function () {
+                  console.error('Erreur lors de la requête API.');
+              }
+          });
+      }
+  
+      // Attacher la fonction checkEmailExistence à l'événement blur du champ email
+      $('#email').on('blur', checkEmailExistence);
+  </script>
+  
+    
+  </body>
+</html>

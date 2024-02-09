@@ -1,21 +1,19 @@
 package com.example.exchangeApp.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-// import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.example.exchangeApp.model.User;
 import com.example.exchangeApp.model.Validation;
-import com.example.exchangeApp.model.Bank;
-import com.example.exchangeApp.model.ComptePrincipal;
 import com.example.exchangeApp.model.CompteUtilisateur;
 import com.example.exchangeApp.model.Role;
 import com.example.exchangeApp.TypeDeRole;
-import com.example.exchangeApp.dto.TransferRequestDeviseDTO;
+import com.example.exchangeApp.dto.TransactionInfoDTO;
 import com.example.exchangeApp.repo.userRepo;
+import com.example.exchangeApp.repo.transactionRepo;
+import com.example.exchangeApp.service.transactionService;
+import com.example.exchangeApp.repo.CurrencyRepo;
 
 import jakarta.persistence.Column;
 import jakarta.servlet.http.HttpSession;
@@ -24,6 +22,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.util.Map;
+import java.util.List;
+
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -31,8 +31,14 @@ import java.util.Optional;
 @Service
 public class userService implements UserDetailsService {
 
+	@Autowired
+	CurrencyRepo currencyRepo;
     @Autowired
 	userRepo repo;
+	@Autowired
+	transactionService transactionService;
+	@Autowired
+	transactionRepo transactionRepo;
 	private validationService validationService;
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -47,6 +53,23 @@ public class userService implements UserDetailsService {
 	public String getDeviseByEmail(String email) {
 		return repo.findDeviseByEmail(email);
 	}
+
+	 public User updateUser(User user) {
+        
+        // Récupérer l'utilisateur existant depuis la base via son id
+        User existingUser = getUserById(user.getId());
+        
+        // Mettre à jour les propriétés modifiées
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setSurName(user.getSurName());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setTel(user.getTel());
+        
+        // Sauvegarder dans la base
+        User updatedUser = repo.save(existingUser);
+        
+        return updatedUser;
+    }
 
     public boolean saveUsers(User user) {
 
@@ -90,6 +113,37 @@ public class userService implements UserDetailsService {
 
 		return true;
 	}
+
+	public Double getSoldeUtilisateurConnecte(HttpSession session) {
+		User userConnected = (User) session.getAttribute("userConnected");
+        Double solde = userConnected.getCompteUtilisateur().getSoldeUtilisateur();
+
+    	// Arrondir le solde à trois chiffres après la virgule
+    	double soldeArrondi = Math.round(solde * 1000.0) / 1000.0;
+	    return soldeArrondi;
+    }
+
+    public String getDeviseUtilisateurConnecte(HttpSession session) {
+		User userConnected = (User) session.getAttribute("userConnected");
+
+	    return currencyRepo.findCodeByName(userConnected.getDevise());
+    }
+
+    public Double getSommeEnvoisUtilisateur(HttpSession session) {
+    	User userConnected = (User) session.getAttribute("userConnected");
+        return transactionRepo.findSommeEnvoisByUserEmail(userConnected.getEmail());
+    }
+
+    public Double getSommeReceptionsUtilisateur(HttpSession session) {
+        User userConnected = (User) session.getAttribute("userConnected");
+        return transactionRepo.findSommeReceptionsByUserEmail(userConnected.getEmail());
+    }
+
+    public List<TransactionInfoDTO> getAllTransactionsForUser(HttpSession session) {
+    	User userConnected = (User) session.getAttribute("userConnected");
+
+        return transactionService.findTransactionsInfoByUserId(userConnected.getId());
+    }
 
 	@Override
     public User loadUserByUsername(final String username) throws UsernameNotFoundException {

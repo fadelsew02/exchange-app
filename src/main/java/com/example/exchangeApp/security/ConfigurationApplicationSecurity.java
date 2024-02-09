@@ -62,9 +62,9 @@ public class ConfigurationApplicationSecurity{
                         )
                         .sessionManagement(sessionManagement ->
                             sessionManagement
-                                    .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // Ou une autre politique selon vos besoins
-                                    .sessionFixation().migrateSession() // Stratégie de fixation de session
-                                    .maximumSessions(1) // Nombre maximal de sessions autorisées par utilisateur
+                                    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) 
+                                    .sessionFixation().migrateSession() 
+                                    .maximumSessions(1) 
                 
                             )
                         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

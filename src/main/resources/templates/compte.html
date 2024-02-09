@@ -97,106 +97,215 @@
     </header>
     <!-- end header section -->
 
+   
     <main>
-      <section id="left-section">
+      <section id="left-section" th:if="${User}">
         <!-- Ajout de l'élément img pour afficher l'image sélectionnée -->
-        <img src="#" alt="Photo de profil" id="profile-preview"
-          style="display: none;">
+        <img
+          src="#"
+          alt="Photo de profil"
+          id="profile-preview"
+          style="display: none"
+        />
         <div id="profile-icon">+</div>
-        <input type="file" id="profile-image-input">
+        <input type="file" id="profile-image-input" />
 
         <table class="table">
           <tr>
             <th>Nom</th>
-            <td>Votre Nom</td>
+            <td><span th:text="${User.surName}"></span></td>
           </tr>
           <tr>
             <th>Prénom</th>
-            <td>Votre Prénom</td>
+            <td><span th:text="${User.firstName}"></span></td>
           </tr>
           <tr>
             <th>Email</th>
-            <td>votre@email.com</td>
+            <td><span th:text="${User.email}"></span></td>
           </tr>
           <tr>
             <th>Téléphone</th>
-            <td>Votre Numéro</td>
+            <td><span th:text="${User.tel}"></span></td>
           </tr>
         </table>
       </section>
 
       <section id="right-section">
-        <button class="btn btn-outline-success" id="add-payment-btn">+ Ajouter
-          Moyen de Paiement</button>
+        <button class="btn btn-outline-success" id="add-payment-btn">
+          + Ajouter Moyen de Paiement/Reception
+        </button>
         <div id="payment-options">
-          <button class="btn btn-outline-success" id="add-credit-card-btn">Ajouter
-            Carte de Crédit</button>
-          <button class="btn btn-outline-success" id="add-bank-account-btn">Ajouter
-            Compte Bancaire</button>
-          <div id="credit-card-input" style="display: none;">
-            <form th:action="@{/api/addCreditCard}" method="post"
-              th:object="${CreditCardInformation}"
-              style="display: flex; flex-direction: column;">
-              <label for="credit-card">Numéro de Carte :</label>
-              <input type="text" id="credit-card"
-                placeholder="1234 5678 9012 3456"
-                th:field="*{cardNumber}"
-                pattern="\d{4} \d{4} \d{4} \d{4}" required />
-              <label for="credit-card">Date d'expiration :</label>
-              <input type="text" id="expiration-date" placeholder="MM/AA"
-                th:field="*{expirationDate}"
-                pattern="\d{2}/\d{2}" required />
-              <label for="credit-card">Code de vérification :</label>
-              <input type="text" id="cvv" placeholder="123" pattern="\d{3}"
-                th:field="*{checkingCode}"
-                required />
-              <label for="credit-card">Adresse de facturation :</label>
-              <input type="text" id="billing-address"
-                th:field="*{facturationAdress}"
-                placeholder="123 Main Street, Cityville, Pays" />
-              <label for="moyenPaiement">Type de carte:</label>
-              <select id="card-type" th:field="*{cardType}" required>
-                <option>Visa</option>
-                <option>Master card</option>
-                <option>American Express</option>
-              </select>
-              <button id="confirm-credit-card-btn" style="margin-top: 15px;">Ajouter</button>
-            </form>
+          <button class="btn btn-outline-success" id="add-credit-card-btn">
+            + Carte de Crédit
+          </button>
+          <button class="btn btn-outline-success" id="add-bank-account-btn">
+            + Compte Bancaire
+          </button>
+          <button class="btn btn-outline-success" id="add-momo-btn">
+            + Compte MoMo
+          </button>
+        </div>
+        <div id="credit-card-input"  style="display: none">
+          <form style="display: flex; flex-direction: column" th:object="${cardCredit}">
+            <label for="credit-card">Numéro de Carte :</label>
+            <input
+              type="text"
+              id="credit-card"
+              placeholder="1234 5678 9012 3456"
+              pattern="\d{4} \d{4} \d{4} \d{4}"
+              th:field="*{}"
+              required
+            />
+            <label for="credit-card">Date d'expiration :</label>
+            <input
+              type="text"
+              id="expiration-date"
+              placeholder="MM/AA"
+              pattern="\d{2}/\d{2}"
+              required
+            />
+            <label for="credit-card">Code de vérification :</label>
+            <input
+              type="text"
+              id="cvv"
+              placeholder="123"
+              pattern="\d{3}"
+              required
+            />
+            <label for="credit-card">Adresse de facturation :</label>
+            <input
+              type="text"
+              id="billing-address"
+              placeholder="123 Main Street, Cityville, Pays"
+            />
+            <label for="moyenPaiement">Type de carte:</label>
+            <select id="card-type" required>
+              <option>Visa</option>
+              <option>Master card</option>
+              <option>American Express</option>
+            </select>
+            <button id="confirm-credit-card-btn" style="margin-top: 15px">
+              Ajouter
+            </button>
+          </form>
+        </div>
+
+        <div id="bank-account-input"  style="display: none">
+          <form style="display: flex; flex-direction: column">
+            <label for="bank-account-number">Numéro de Compte :</label>
+            <input
+              type="text"
+              id="bank-account-number"
+              placeholder="123456789012"
+              pattern="\d{12}"
+              required
+            />
+
+            <label for="bank-name">Nom de la Banque:</label>
+            <select id="bank-name" required>
+              <option>BOA</option>
+              <option>Ecobank</option>
+              <option>NSIA</option>
+            </select>
+
+            <label for="iban-number">Numéro IBAN :</label>
+            <input
+              type="text"
+              id="iban-number"
+              placeholder="Entrez le numéro IBAN"
+              pattern="[A-Z]{2}\d{2}[A-Za-z\d]{11,30}"
+              required
+            />
+
+            <label for="account-type">Type de compte:</label>
+            <input
+              type="text"
+              id="account-type"
+              placeholder="Entrez le type de compte"
+              required
+            />
+
+            <label for="auto-transactions"
+              >Autorisation transactions automatiques :</label
+            >
+            <select id="auto-transactions" required>
+              <option>Oui</option>
+              <option>Non</option>
+            </select>
+
+            <button id="confirm-bank-account-btn" style="margin-top: 15px">
+              Ajouter
+            </button>
+          </form>
+        </div>
+        <div id="momo-input" style="display: none">
+          <div class="container mt-4">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Ajouter une option MoMo</h5>
+                    <form>
+                      <div class="form-group">
+                        <label for="country-code">Indicatif</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">+</span>
+                          </div>
+                          <select
+                            class="custom-select"
+                            id="country-code"
+                            required
+                          >
+                            <option value="" selected disabled>
+                              Choisir...
+                            </option>
+                            <!-- Ajoutez les options pour les indicatifs téléphoniques de différents pays -->
+                            <option value="+1">+1 (États-Unis)</option>
+                            <option value="+44">+44 (Royaume-Uni)</option>
+                            <!-- Ajoutez d'autres pays selon vos besoins -->
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="momo-number">Numéro</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="momo-number"
+                          placeholder="12345678"
+                          pattern="\d{8}"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="momo-operator">Opérateur mobile</label>
+                        <select
+                          class="custom-select"
+                          id="momo-operator"
+                          required
+                        >
+                          <option value="MTN">MTN</option>
+                          <option value="MOOV">MOOV</option>
+                          <option value="CELTIS">CELTIS</option>
+                        </select>
+                      </div>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="confirm-momo-btn"
+                      >
+                        Ajouter
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div id="bank-account-input" style="display: none;">
-            <form style="display: flex; flex-direction: column;">
-              <label for="bank-account-number">Numéro de Compte :</label>
-              <input type="text" id="bank-account-number"
-                placeholder="123456789012" pattern="\d{12}" required />
-
-              <label for="bank-name">Nom de la Banque:</label>
-              <select id="bank-name" required>
-                <option>BOA</option>
-                <option>Ecobank</option>
-                <option>NSIA</option>
-              </select>
-
-              <label for="iban-number">Numéro IBAN :</label>
-              <input type="text" id="iban-number"
-                placeholder="Entrez le numéro IBAN"
-                pattern="[A-Z]{2}\d{2}[A-Za-z\d]{11,30}" required />
-
-              <label for="account-type">Type de compte:</label>
-              <input type="text" id="account-type"
-                placeholder="Entrez le type de compte" required />
-
-              <label for="auto-transactions">Autorisation transactions
-                automatiques :</label>
-              <select id="auto-transactions" required>
-                <option>Oui</option>
-                <option>Non</option>
-              </select>
-
-              <button id="confirm-bank-account-btn" style="margin-top: 15px;">Ajouter</button>
-            </form>
-          </div>
-        </section>
-      </main>
+        </div>
+      </section>
+    </main>
 
       <script>
   document.addEventListener('DOMContentLoaded', function () {

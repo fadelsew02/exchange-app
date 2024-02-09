@@ -220,7 +220,6 @@
 
           <form th:action="@{/api/connexion}" method="post" th:object="${user}">
             <div class="field-wrap">
-              <!-- <label> Email Address<span class="req">*</span> </label> -->
               <input 
                 type="email"
                 title="email"
@@ -233,7 +232,6 @@
             </div>
 
             <div class="field-wrap">
-              <!-- <label> Password<span class="req">*</span> </label> -->
               <input
                 type="password"
                 title="password"
@@ -252,9 +250,99 @@
           </form>
         </div>
       </div>
-      <!-- tab-content -->
     </div>
-    <!-- /form -->
+    <!-- end info section -->
+
+    <section class="info_section layout_padding2">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-lg-2 info_col">
+            <div class="info_contact">
+              <h4>
+                Address
+              </h4>
+              <div class="contact_link_box">
+                <a href="">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  <span>
+                    Location
+                  </span>
+                </a>
+                <a href="">
+                  <i class="fa fa-phone" aria-hidden="true"></i>
+                  <span>
+                    Call +01 1234567890
+                  </span>
+                </a>
+                <a href="">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                  <span>
+                    demo@gmail.com
+                  </span>
+                </a>
+              </div>
+            </div>
+            <div class="info_social">
+              <a href="">
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-linkedin" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-instagram" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-2 mx-auto info_col">
+            <div class="info_link_box">
+              <h4>
+                Links
+              </h4>
+              <div class="info_links">
+                <a class="active" href="index.html">
+                  Acceuil
+                </a>
+                <a class="" href="monnaies.html">
+                  Nos monnaies
+                </a>
+                <a class="" href="service.html">
+                  Services
+                </a>
+                <a class="" href="contact.html">
+                  Contact
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-2 info_col ">
+            <h4>
+              Subscribe
+            </h4>
+            <form action="#">
+              <input type="text" placeholder="Enter email" />
+              <button type="submit">
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- footer section -->
+    <section class="footer_section">
+      <div class="container">
+        <p>
+          &copy; <span id="displayYear"></span> Copyright
+          <a href="https://html.design/">Application e-Transfert</a>
+        </p>
+      </div>
+    </section>
+    <!-- footer section -->
 
     <script>
       function emailValidation() {
@@ -309,43 +397,20 @@
         });
       });
     </script>
-
-    <!-- end info section -->
-
-    <!-- footer section -->
-    <section class="footer_section">
-      <div class="container">
-        <p>
-          &copy; <span id="displayYear"></span> Copyright
-          <a href="https://html.design/">Application e-Transfert</a>
-        </p>
-      </div>
-    </section>
-    <!-- footer section -->
-
-    <script
-      type="text/javascript"
-      src="@{../javascript/sendRequest.js}"
-    ></script>
     <!-- jQery -->
-    <script
+<!--     <script
       type="text/javascript"
       src="@{../javascript/jquery-3.4.1.min.js}"
     ></script>
-    <!-- popper js -->
+     popper js
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
       integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
       crossorigin="anonymous"
     ></script>
-    <!-- bootstrap js -->
-    <script type="text/javascript" src="@{../javascript/bootstrap.js}"></script>
-    <!-- owl slider -->
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
-    ></script>
+     bootstrap js
+    <script type="text/javascript" src="@{../javascript/bootstrap.js}"></script> -->
     <!-- custom js -->
-    <script type="text/javascript" src="@{../javascript/custom.js}"></script>
+   <!--  <script type="text/javascript" src="@{../javascript/custom.js}"></script> -->
   </body>
 </html>

@@ -14,9 +14,7 @@ public interface userRepo extends JpaRepository<User, Long>{
     
     @Query("SELECT u.devise FROM User u WHERE u.email = :email")
     String findDeviseByEmail(@Param("email") String email);
-
-
-
+   
 }
 
 

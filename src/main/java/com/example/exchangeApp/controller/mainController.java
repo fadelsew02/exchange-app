@@ -4,12 +4,17 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
 
 import com.example.exchangeApp.model.Currency;
+import com.example.exchangeApp.model.SoldOperation;
 import com.example.exchangeApp.model.CreditCard;
 import com.example.exchangeApp.model.TransactionRequest;
 import com.example.exchangeApp.model.User;
 import com.example.exchangeApp.model.Validation;
 import com.example.exchangeApp.service.BankService;
 import com.example.exchangeApp.service.CurrencyService;
+import com.example.exchangeApp.service.userService;
+import com.example.exchangeApp.dto.TransactionInfoDTO;
+
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -27,9 +32,10 @@ public class mainController{
     @Autowired
 	BankService bankService;
     @Autowired
+    userService service;
+    @Autowired
 	CurrencyService currencyService;
  
-
 
     @GetMapping("/")
     public String index() {
@@ -39,7 +45,7 @@ public class mainController{
         return "index";
     }
     
-    @GetMapping("/money")
+    @GetMapping("/monnaies")
     public String money() {
         return "monnaies";
     }
@@ -71,7 +77,7 @@ public class mainController{
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(Model model) {
+    public String dashboard(Model model, HttpSession session) {
         List<Currency> currencies = new ArrayList<>();
         currencies.add(new Currency("EUR", "Euro"));
         currencies.add(new Currency("USD", "US Dollar"));
@@ -104,30 +110,34 @@ public class mainController{
 		currencies.add(new Currency("SGD", "Singapore Dollar"));
 
         Currency currency = new Currency();
-        System.out.println(currencies);
         for (Currency curren : currencies) {
             currency.setCode(curren.getCode());
             currency.setName(curren.getName());
         }
+        User userConnected = (User) session.getAttribute("userConnected");
+        System.out.println(userConnected);
 
+        model.addAttribute("User", userConnected);
         model.addAttribute("TransactionRequest", new TransactionRequest());
+        model.addAttribute("creditCard", new CreditCard());
+        model.addAttribute("soldOperation", new SoldOperation());
 		model.addAttribute("TransactionRequestDevise", new TransactionRequest());
         model.addAttribute("currencies", currencies);
+
+
 
 
         return "dashboard";
     }
 
-    @GetMapping("/mon-compte")
-    public String compte(Model model) {
-        model.addAttribute("CreditCardInformation", new CreditCard());
-        return "compte";
-    }
 
     @GetMapping("/mes-transactions")
-    public String transactions(Model model) {
-
-        return "transaction";
+    public ModelAndView transactions(ModelAndView modelAndView, HttpSession session) {
+        List<TransactionInfoDTO> allTransactions = service.getAllTransactionsForUser(session);
+        System.out.println(allTransactions);
+        modelAndView = new ModelAndView("transaction");
+        modelAndView.addObject("AllTransactions", allTransactions);
+        return modelAndView;
     }
 
     @GetMapping("/transfer-money")
@@ -138,9 +148,4 @@ public class mainController{
         return "transaction";
     }
 
-
 }
-
-
-
-

@@ -1,7 +1,10 @@
 package com.example.exchangeApp.service;
 
+
 import java.time.LocalDateTime;
 import java.util.Optional;
+
+import java.sql.Timestamp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +24,12 @@ import com.example.exchangeApp.repo.CurrencyRepo;
 import com.example.exchangeApp.repo.transactionRepo;
 import com.example.exchangeApp.repo.userRepo;
 
+import com.example.exchangeApp.dto.TransactionInfoDTO;
+
 import jakarta.servlet.http.HttpSession;
+
+import java.util.List;
+import java.util.ArrayList;
 
 @Service
 
@@ -37,6 +45,8 @@ public class transactionService {
 	transactionRepo transactionRepo;
     @Autowired
 	CreditCardRepo creditCardRepo;
+    @Autowired
+	NotificationService notificationService;
 
     public boolean transferMoney(TransferRequestDTO transferRequestDTO, HttpSession session){
         User userRetrieving = (User) session.getAttribute("userConnected");
@@ -70,15 +80,9 @@ public class transactionService {
                         break;
                 }
 
-                System.out.println(soldeSuffisant);
-
                 if (soldeSuffisant) {
-                    System.out.println(devise);
-                    System.out.println(currencyRepo.findCodeByName(transferRequestDTO.deviseDestination()));
 
                     ResponseEntity<String> currencyApiResponse = getCurrencyData(currencyRepo.findCodeByName(devise), currencyRepo.findCodeByName(transferRequestDTO.deviseDestination()));
-
-                    System.out.println("Currency API Response: " + currencyApiResponse.getBody());
                     double taux = 0;
                     try{
                         String jsonResponse = currencyApiResponse.getBody();
@@ -87,8 +91,6 @@ public class transactionService {
             
                         taux = jsonObject.getJSONObject("data").getDouble(currencyRepo.findCodeByName(transferRequestDTO.deviseDestination()));
             
-                        // Imprimer la valeur de "EUR"
-                        System.out.println("Valeur  : " + taux);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -106,6 +108,7 @@ public class transactionService {
                     userRetrieving.getCompteUtilisateur().setSoldeUtilisateur(userDestination.getCompteUtilisateur().getSoldeUtilisateur() - transferRequestDTO.montant());
     
                     transactionRepo.save(transaction);
+                    notificationService.sendTransferNotification(userDestination, userRetrieving, transferRequestDTO.montant());
                     return true;
                 } else {
                     return false;
@@ -129,7 +132,7 @@ public class transactionService {
     
     public boolean checkSoldeCreditCard(User user, double montant) {
         // Double soldeCreditCard = creditCardRepo.findByUser(user);
-        return creditCardRepo.findByUser(user) >= montant ; 
+        return creditCardRepo.findByUser(user).getSoldeCard() >= montant ; 
     }
     
     public boolean checkSoldeAccountBank(User user, double montant) {
@@ -183,4 +186,28 @@ public class transactionService {
 
 		return restTemplate.getForEntity(apiUrl, String.class);
 	}
+
+
+    public List<TransactionInfoDTO> findTransactionsInfoByUserId(Long userId) {
+        List<Object[]> results = transactionRepo.findTransactionsInfoByUserId(userId);
+        List<TransactionInfoDTO> transactionInfos = new ArrayList<>();
+
+
+        for (Object[] result : results) {
+            Double transactionAmount = (Double) result[0];
+
+            Timestamp timestamp = (Timestamp) result[1];
+            LocalDateTime transactionDateTime = timestamp.toLocalDateTime();
+            String status = (String) result[2];
+            String userEmail = (String) result[3];
+            String transactionCurrency = (String) result[4];
+
+
+            TransactionInfoDTO transactionInfo = new TransactionInfoDTO(transactionAmount, transactionDateTime, status, userEmail, transactionCurrency);
+            transactionInfos.add(transactionInfo);
+        }
+
+        return transactionInfos;
+    }
+
 }
