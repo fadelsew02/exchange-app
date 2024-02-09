@@ -86,7 +86,6 @@ public class CreditCardService {
                 if (compteUtilisateur != null && compteUtilisateur.getSoldeUtilisateur() >= soldOperationDTO.amount()) {
                     compteUtilisateur.setSoldeUtilisateur(compteUtilisateur.getSoldeUtilisateur() - soldOperationDTO.amount());
                     compteUtilisateurRepo.save(compteUtilisateur);
-                    System.out.println(compteUtilisateur);
 
                     // Mettre à jour le solde de la carte de crédit
                     CreditCard creditCard = creditCardRepo.findByUserId(userRetrieving.getId());

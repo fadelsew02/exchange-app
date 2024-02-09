@@ -19,10 +19,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link type="text/css" rel="stylesheet" th:href="@{../assets/css/style.css}" />
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/css/pikaday.min.css" integrity="sha384-n8h37ZRV6zROn1bqRrnoWQ0k85iFgR3dY46uLqhsYtY8vPzXU4Nfg27ndLwk2E98" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha384-V7Rx8xVsVHzdDRX5ggR83pVoeeL1vf9RHPSqcM0eRv3cAwlRmeVCiDhS6TQ6P98a" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js" integrity="sha384-ZZ93w07f8EQj1RzvqB9VmXy7B7EfHDQIEBbbuTrw8KccYYjx2Y5tAmUAA2WTmdoU" crossorigin="anonymous"></script> -->
-
 </head>
 
 <body>
@@ -314,8 +310,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-    
-                    <!-- Sélection des options de paiement -->
                     <div class="form-group">
                         <label for="paymentMethod">Choisissez un moyen de paiement :</label>
                         <select id="paymentMethod" class="form-control">
@@ -324,8 +318,6 @@
                             <option value="mobileMoney">Mobile Money</option>
                         </select>
                     </div>
-    
-                    <!-- Informations spécifiques à la carte de crédit -->
                     <div id="creditCardInfo" class="payment-info">
                         <form  style="display: flex; flex-direction: column" th:object="${creditCard}" id="credit-card-addForm">
                             <div class="form-group">
@@ -350,8 +342,6 @@
                             </div>
                         </form>
                     </div> 
-    
-                    <!-- Informations spécifiques au compte bancaire -->
                     <div id="bankAccountInfo" class="payment-info">
                         <form style="display: flex; flex-direction: column">
                             <label for="bank-account-number">Numéro de Compte :</label>
@@ -400,8 +390,6 @@
                             </button>
                           </form>
                     </div>
-    
-                    <!-- Informations spécifiques à Mobile Money -->
                     <div id="mobileMoneyInfo" class="payment-info">
                         <!-- Ajoutez les champs spécifiques à Mobile Money ici -->
                         <!-- Exemple : -->
@@ -513,7 +501,6 @@
       </div>
     </div>
 
-    <!-- Contenu de la modale du profil -->
     <div class="modal fade" id="profilModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -552,7 +539,6 @@
             </div>
         </div>
     </div> 
-
 
     <div id="successModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -627,79 +613,54 @@
 
         $('#operationModalForm').submit (function (event) {
             event.preventDefault();
-            
 
-            // if (amount && operationType) {
-                // Appel AJAX pour effectuer l'opération
                 $.ajax({
                     url: '/api/soldoperation',
                     method: 'POST',
                     data: $("#operationModalForm").serialize(),
                     success: function (response) {
-                        // Logique de gestion de la réponse réussie
                         console.log(response);
-                        alert(response)
                     },
                     error: function (error) {
-                        // Logique de gestion de l'erreur
                         console.error(error);
                     }
                 });
-            // }
 
-            // Fermer la modale
             $('#operationModal').modal('hide');
         });
 
         $("#credit-card-addForm").submit(function(event) {
             event.preventDefault();
-
-            // Envoi de la requête AJAX pour ajouter la carte de crédit
             $.ajax({
                 url: '/api/addCreditCard',
                 method: 'POST',
                 data: $("#credit-card-addForm").serialize(),
                 success: function(response) {
                     console.log(response);
-                    // Fermeture de la modale "paymentOptionsModal"
                     $("#paymentOptionsModal").modal('hide');
-
-                    // Affichage de la modale de succès
                     $("#successModalAdd").modal('show');
                 },
                 error: function(response) {
-                    // Fermeture de la modale "paymentOptionsModal"
                     $("#paymentOptionsModal").modal('hide');
                     console.log(response);
-                    // Affichage de la modale d'erreur
                     $("#errorModalAdd").modal('show');
                 }
             });
         })
 
         function togglePaymentInfo(paymentMethod) {
-            // Masquer toutes les sections d'informations
             document.querySelectorAll('.payment-info').forEach(function (info) {
                 info.style.display = 'none';
             });
-
-            // Afficher la section d'informations spécifique au moyen de paiement sélectionné
             var paymentInfo = document.getElementById(paymentMethod + 'Info');
             if (paymentInfo) {
                 paymentInfo.style.display = 'block';
             }
         }
-
-        // Écouter les changements dans la sélection du moyen de paiement
         document.getElementById('paymentMethod').addEventListener('change', function () {
-            // Récupérer la valeur sélectionnée
             var selectedPaymentMethod = this.value;
-
-            // Appeler la fonction pour afficher ou masquer les informations en fonction du moyen de paiement
             togglePaymentInfo(selectedPaymentMethod);
         });
-
-        // Appeler la fonction lors du chargement initial de la page pour gérer l'état actuel de la sélection
         document.addEventListener('DOMContentLoaded', function () {
             var selectedPaymentMethod = document.getElementById('paymentMethod').value;
             togglePaymentInfo(selectedPaymentMethod);
@@ -775,23 +736,14 @@
             url: '/transfer-money',
             data: formData,
             success: function(response) {
-              // Transfert réussi !
-
-                // Fermer la modale de transfert
                 $('#transferModal').modal('hide');
-
-                // Afficher la modale de succès
                 $('#successModal').modal('show');
             },
             error: function(error) {
-              // Afficher la modale d'erreur
                 $('#errorModal').modal('show');
             }
         });
         }
-        });
-        $('#transferSuccessToast').toast({
-          delay: 5000 // Durée en ms
         });
 
         $(document).ready(function () {
@@ -817,7 +769,6 @@
                     console.log(error);
                     }
                 });
-                // Ajoutez ici la logique pour sauvegarder les modifications (via AJAX par exemple)
             });
 
             // Afficher la modale lorsque le document est prêt

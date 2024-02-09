@@ -38,25 +38,41 @@ public class mainController{
  
 
     @GetMapping("/")
-    public String index() {
+    public String index(Model model, HttpSession session) {
 
         boolean bool = bankService.SaveBank();
         boolean bool2 = currencyService.SaveCurrency();
+        User userConnected = (User) session.getAttribute("userConnected");
+        if(userConnected != null){
+            model.addAttribute("isLoggedIn", userConnected);
+        }
         return "index";
     }
-    
+
     @GetMapping("/monnaies")
-    public String money() {
+    public String money(Model model, HttpSession session) {
+        User userConnected = (User) session.getAttribute("userConnected");
+        if(userConnected != null){
+            model.addAttribute("isLoggedIn", userConnected);
+        }
         return "monnaies";
     }
 
     @GetMapping("/reviews")
-    public String review() {
+    public String review(Model model, HttpSession session) {
+        User userConnected = (User) session.getAttribute("userConnected");
+        if(userConnected != null){
+            model.addAttribute("isLoggedIn", userConnected);
+        }
         return "reviews";
     }
 
     @GetMapping("/contact")
-    public String service() {
+    public String service(Model model, HttpSession session) {
+        User userConnected = (User) session.getAttribute("userConnected");
+        if(userConnected != null){
+            model.addAttribute("isLoggedIn", userConnected);
+        }
         return "contact";
     }
 
@@ -115,7 +131,6 @@ public class mainController{
             currency.setName(curren.getName());
         }
         User userConnected = (User) session.getAttribute("userConnected");
-        System.out.println(userConnected);
 
         model.addAttribute("User", userConnected);
         model.addAttribute("TransactionRequest", new TransactionRequest());

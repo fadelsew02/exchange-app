@@ -53,8 +53,16 @@
                 <a class="nav-link" th:href="@{/contact}">Contact</a>
               </li>
               <li class="nav-item">
+                <th:block th:if="${isLoggedIn}">
+                    <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
+                </th:block>
+                <th:block th:unless="${isLoggedIn}">
+                    <a class="nav-link" th:href="@{/login-and-register}"><i class="fa fa-user" aria-hidden="true"></i>Se Connecter</a>
+                </th:block>
+            </li>
+              <!-- <li class="nav-item">
                 <a class="nav-link" th:href="@{/login-and-register}"> <i class="fa fa-user" aria-hidden="true"></i>Se Connecter</a>
-              </li>
+              </li> -->
               <form class="form-inline">
                 <button class="btn  my-2 my-sm-0 nav_search-btn" title="button" type="submit">
                   <i class="fa fa-search" aria-hidden="true"></i>

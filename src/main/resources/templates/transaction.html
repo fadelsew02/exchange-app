@@ -51,7 +51,7 @@
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
                         </span>
-                        <span class="title"><button type="button" class="btn" id="transferButton ">Transférer
+                        <span class="title"><button type="button" class="btn" data-toggle="modal" data-target="#warningModal">Transférer
                         </button></span>
                     </a>
                 </li>
@@ -60,7 +60,7 @@
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon>
                         </span>
-                        <span class="title"><button type="button" class="btn" data-toggle="modal" data-target="#paymentOptionsModal">Paiement/Réception
+                        <span class="title"><button type="button" class="btn" data-toggle="modal" data-target="#warningModal">Paiement/Réception
                         </button></span>
                     </a>
                 </li>
@@ -109,7 +109,7 @@
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon>
                         </span>
-                        <span class="title"><button type="button" class="btn" data-toggle="modal" data-target="#chooseCurrencyModal">Ma devise
+                        <span class="title"><button type="button" class="btn" data-toggle="modal" data-target="#warningModal">Ma devise
                         </button></span>
                     </a>
                 </li>
@@ -118,7 +118,7 @@
                         <span class="icon">
                             <ion-icon name="help-outline"></ion-icon>
                         </span>
-                        <span class="title"><button type="button" class="btn" data-toggle="modal" data-target="#profilModal">Profil
+                        <span class="title"><button type="button" class="btn" data-toggle="modal" data-target="#warningModal">Profil
                         </button></span>
                     </a>
                 </li>
@@ -127,7 +127,7 @@
                         <span class="icon">
                             <ion-icon name="log-out-outline"></ion-icon>
                         </span>
-                        <span class="title"><button type="button" class="btn" data-toggle="modal" data-target="#signOutModal">Sign Out
+                        <span class="title"><button type="button" class="btn" data-toggle="modal" data-target="#warningModal">Sign Out
                         </button></span>
                     </a>
                 </li>
@@ -168,35 +168,29 @@
             </div>
         </div>
     </div>
-    <div id="externalModalContainer"></div>
+
+    <div class="modal fade" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Avertissement</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Si vous souhaitez effectuer cette action, veuillez vous rendre sur la page Dashboard.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <a href="/dashboard" class="btn btn-primary">Aller au Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // Fonction pour charger la modale depuis une autre page
-        function loadExternalModal() {
-            $.ajax({
-                url: '/dashboard', // Remplacez par le chemin correct vers votre page avec la modale
-                METHOD: 'GET',
-                success: function (response) {
-                    // Trouvez le contenu de la modale dans la réponse
-                    var modalContent = $(response).find('#transferModal');
-
-                    // Ajoutez le contenu au conteneur sur la page "/mes-transactions"
-                    $('#externalModalContainer').html(modalContent);
-
-                    // Affichez la modale une fois qu'elle a été ajoutée au DOM
-                    $('#transferModal').modal('show');
-                },
-                error: function () {
-                    console.error('Erreur lors du chargement de la modale externe.');
-                }
-            });
-        }
-
-        // Appeler la fonction pour charger la modale lors du chargement de la page
-        $("#transferButton").click(function () {
-            alert('cc')
-            loadExternalModal();
-        });
+      
     </script>
 
 
